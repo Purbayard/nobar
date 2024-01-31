@@ -51,12 +51,7 @@ class HandleInertiaRequests extends Middleware
         ];
     }
 
-    /**
-     * Define the props that are shared by default.
-     *
-     * @return array<string, mixed>
-     */
-    public function share(Request $request): array
+    public function share(Request $request)
     {
         return array_merge(parent::share($request), [
             'auth' => [
@@ -66,6 +61,9 @@ class HandleInertiaRequests extends Middleware
             'flashMessage' => [
                 'message' => Session::get('message'),
                 'type' => Session::get('type'),
+            ],
+            'env' => [
+                'MIDTRANS_CLIENTKEY' => env('MIDTRANS_CLIENTKEY')
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
